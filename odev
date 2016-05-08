@@ -1,0 +1,38 @@
+/* QUESTION 2
+CREATE OR REPLACE PROCEDURE manager_changing
+(
+department_id_number IN NUMBER,
+manager_id_number IN NUMBER
+)
+IS
+BEGIN
+UPDATE departments
+set manager_id = manager_id_number
+WHERE department_id = department_id_number;
+END manager_changing;
+EXECUTE manager_changing(10,201);
+*/
+
+
+
+/* QUESTION 3
+CREATE OR REPLACE FUNCTION RETURN_VALUE
+(
+department_id_number IN INT
+)
+RETURN VARCHAR
+IS
+temp_first_name system.employees.first_name%type;
+temp_last_name system.employees.last_name%type;
+BEGIN
+SELECT employees.first_name,employees.last_name into p_first_name,p_last_name
+FROM system.employees 
+WHERE employee_id IN (SELECT manager_id 
+                      FROM system.departments
+                      WHERE department_id = department_id_number );
+RETURN temp_first_name || temp_last_name;
+END RETURN_VALUE;
+EXECUTE dbms.output.put_line(RETURN_VALUE(100));
+*/
+
+
